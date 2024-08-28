@@ -1,11 +1,18 @@
-create database gym_fitness
+use master 
+go
+alter database gym_fitness set single_user with rollback immediate
 
+drop database if exists gym_fitness
+go
+create database gym_fitness
+go
+use gym_fitness
 CREATE TABLE PhysicalLevel (
     level_id INT IDENTITY(1,1) PRIMARY KEY,
     level_name NVARCHAR(MAX)
 );
 
-CREATE TABLE Goal (
+CREATE TABLE Goal ( 
     goal_id INT IDENTITY(1,1) PRIMARY KEY,
     goal_name NVARCHAR(MAX)
 );
@@ -14,14 +21,7 @@ CREATE TABLE UserAccount (
     user_id VARCHAR(255) PRIMARY KEY,
     user_fullname NVARCHAR(MAX),
     user_email VARCHAR(MAX),
-    user_phone VARCHAR(20),
-    user_password VARCHAR(60),
-	facebook_id NVARCHAR(MAX),
-	user_image NVARCHAR(MAX),
-    goal_id INT,
-    level_id INT,
-    FOREIGN KEY (goal_id) REFERENCES Goal(goal_id),
-    FOREIGN KEY (level_id) REFERENCES PhysicalLevel(level_id)
+    user_phone VARCHAR(20)
 );
 
 CREATE TABLE UserInfor (
@@ -32,6 +32,10 @@ CREATE TABLE UserInfor (
     age INT,
     DoB DATE,
     user_id VARCHAR(255),
+	goal_id INT,
+    level_id INT,
+    FOREIGN KEY (goal_id) REFERENCES Goal(goal_id),
+    FOREIGN KEY (level_id) REFERENCES PhysicalLevel(level_id),
     FOREIGN KEY (user_id) REFERENCES UserAccount(user_id)
 );
 
@@ -151,3 +155,6 @@ CREATE TABLE Routine
 	FOREIGN KEY (user_id) REFERENCES UserAccount(user_id),
 	FOREIGN KEY (excersise_id) REFERENCES Excersise(excersise_id)
 )
+
+INSERT PhysicalLevel(level_name) values ('Beginner'), ('Intermediate'), ('Advance')
+INSERT Goal(goal_name) values ('Lose weight'), ('Gain weight'), ('Muscle mass gain'), ('Shape body'), ('Others')
