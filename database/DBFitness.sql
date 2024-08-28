@@ -31,6 +31,7 @@ CREATE TABLE UserInfor (
     height DECIMAL(5,2),
     age INT,
     DoB DATE,
+	user_image nvarchar(max),
     user_id VARCHAR(255),
 	goal_id INT,
     level_id INT,
