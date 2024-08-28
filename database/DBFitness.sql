@@ -21,7 +21,8 @@ CREATE TABLE UserAccount (
     user_id VARCHAR(255) PRIMARY KEY,
     user_fullname NVARCHAR(MAX),
     user_email VARCHAR(MAX),
-    user_phone VARCHAR(20)
+    user_phone VARCHAR(20),
+    user_password NVARCHAR(MAX),
 );
 
 CREATE TABLE UserInfor (
