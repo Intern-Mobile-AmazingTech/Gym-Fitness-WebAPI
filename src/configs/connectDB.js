@@ -1,10 +1,11 @@
 //import sql from 'mssql';
 const sql = require('mssql');
+require('dotenv').config();
 
 const config = {
-    user: 'sa',
-    password: '123',
-    server: 'localhost',
+    user: process.env.DB_USER || 'sa',
+    password: process.env.DB_PASSWORD || '123',
+    server: process.env.DB_SERVER || 'localhost',
     database: 'gym_fitness',
     options: {
         encrypt: true, // for azure
