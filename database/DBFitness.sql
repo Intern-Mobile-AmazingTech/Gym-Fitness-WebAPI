@@ -23,6 +23,7 @@ CREATE TABLE UserAccount (
     user_email VARCHAR(MAX),
     user_phone VARCHAR(20),
     user_password NVARCHAR(MAX),
+    isNormalUser BIT DEFAULT 1
 );
 
 CREATE TABLE UserInfor (
