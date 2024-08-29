@@ -8,6 +8,7 @@ const initApiRoute = (app) => {
     router.post('/signup', apiController.signup);
     router.get('/checkexist', apiController.checkExist);
     router.post('/updatepassword', apiController.updatePassword);
+    router.post('/saveuserinfo', apiController.saveUserInfo);
     return app.use('/api', router);
 }
 

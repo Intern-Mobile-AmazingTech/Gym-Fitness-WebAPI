@@ -68,11 +68,31 @@ const updatePassword = async (req, res) => {
     }
 }
 
+const saveUserInfo = async (req, res) => {
+    try {
+        let { gender, weight, height, age, DoB, user_image, user_id, goal_id, level_id } = req.body;
+        const pool = await connectDB();
 
+        // const userCheck = await pool.request().query(`SELECT * FROM UserAccount WHERE user_id = '${user_id}'`);
+        // if (userCheck.rowsAffected[0] === 0) {
+        //     return res.status(404).json({ message: "User not found" });
+        // }
+
+        const result = await pool.request().query(`
+            INSERT INTO UserInfor (gender, weight, height, age, DoB, user_image, user_id, goal_id, level_id)
+            VALUES (N'${gender}', ${weight}, ${height}, ${age}, '${DoB}', N'${user_image}', '${user_id}', ${goal_id}, ${level_id})`);
+
+        return res.status(200).json({ message: "User info saved successfully" });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "An error occurred", error: err.message });
+    }
+}
 
 module.exports = {
     test,
     signup,
     checkExist,
-    updatePassword
+    updatePassword,
+    saveUserInfo
 }
