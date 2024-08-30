@@ -68,12 +68,18 @@ const saveUserInfo = async (req, res) => {
     try {
         let { gender, weight, height, age, DoB, user_image, user_id, goal_id, level_id } = req.body;
         const pool = await connectDB();
-
+        
         // const userCheck = await pool.request().query(`SELECT * FROM UserAccount WHERE user_id = '${user_id}'`);
         // if (userCheck.rowsAffected[0] === 0) {
         //     return res.status(404).json({ message: "User not found" });
         // }
-
+        if (DoB === undefined || DoB === null || DoB === "" || DoB === "null" || DoB === "undefined" || DoB == undefined) {
+            var date = new Date();
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            DoB = `${year}-${month}-${day}`;
+        }
         const result = await pool.request().query(`
             INSERT INTO UserInfor (gender, weight, height, age, DoB, user_image, user_id, goal_id, level_id)
             VALUES (N'${gender}', ${weight}, ${height}, ${age}, '${DoB}', N'${user_image}', '${user_id}', ${goal_id}, ${level_id})`);
