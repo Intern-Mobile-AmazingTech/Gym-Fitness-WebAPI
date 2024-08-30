@@ -8,7 +8,7 @@ let test = async (req, res) => {
 
 const signup = async (req, res) => {
     try {
-        let { user_id, user_email, user_fullname, user_phone, isNormalUser } = req.body;
+        let { user_id, user_email, user_fullname, user_phone, user_password, isNormalUser } = req.body;
         const pool = await connectDB();
         const result = await pool.request().query(`Select * from UserAccount where user_email = '${user_email}'`);
         if (result.rowsAffected[0] > 0) {
@@ -16,17 +16,13 @@ const signup = async (req, res) => {
         }
         else {
             try {
-                if (isNormalUser != null){
-                    const result = await pool.request().query(`Insert into UserAccount(user_id, user_email, user_fullname, user_phone, isNormalUser) values ('${user_id}', '${user_email}', '${user_fullname}', '${user_phone}', '${isNormalUser}')`);
-                    return res.status(200).json({ message: "Success" });
-                }
-                else {
-                    const result = await pool.request().query(`Insert into UserAccount(user_id, user_email, user_fullname, user_phone) values ('${user_id}', '${user_email}', '${user_fullname}', '${user_phone}')`);
-                    return res.status(200).json({ message: "Success" });
-                }
+                if (isNormalUser === undefined) { isNormalUser = 1; }
+                const result = await pool.request().query(`Insert into UserAccount(user_id, user_email, user_fullname, user_phone, user_password, isNormalUser) values ('${user_id}', '${user_email}', '${user_fullname}', '${user_phone}', '${user_password}', '${isNormalUser}')`);
+                return res.status(200).json({ message: "Success" });
             }
             catch (err) {
                 console.log(err);
+                return res.status(500).json({ message: "An error occurred", error: err.message });
             }
         }
     } catch (err) {
