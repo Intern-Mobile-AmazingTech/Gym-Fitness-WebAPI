@@ -17,7 +17,7 @@ const signup = async (req, res) => {
         else {
             try {
                 if (isNormalUser === undefined) { isNormalUser = 1; }
-                const result = await pool.request().query(`Insert into UserAccount(user_id, user_email, user_fullname, user_phone, user_password, isNormalUser) values ('${user_id}', '${user_email}', '${user_fullname}', '${user_phone}', '${user_password}', '${isNormalUser}')`);
+                const result = await pool.request().query(`Insert into UserAccount(user_id, user_email, user_fullname, user_phone, user_password, isNormalUser) values ('${user_id}', '${user_email}', N'${user_fullname}', '${user_phone}', '${user_password}', '${isNormalUser}')`);
                 return res.status(200).json({ message: "Success" });
             }
             catch (err) {
