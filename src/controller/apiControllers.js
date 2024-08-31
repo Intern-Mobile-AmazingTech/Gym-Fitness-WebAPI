@@ -34,13 +34,13 @@ const checkExist = async (req, res) => {
     try {
         let {user_email} = req.body;
         const pool = await connectDB();
-        const result = await pool.request().query(`select * from UserAccount where user_email = '${user_email}'`);
+        const result = await pool.request().query(`select * from UserAccount where user_email = '${user_email}' and isNormalUser = 1`);
         if (result.rowsAffected[0] > 0) {
             console.log(user_email);
             return res.status(400).json({ message: "Email already exists" });
         }
         else {
-            return res.status(200).json({ message: "Email is available" });
+            return res.status(200).json({ message: "Can't find account" });
         }
     } catch (err) {
         console.log(err);
